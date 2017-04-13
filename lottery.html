@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="msapplication-tap-highlight" content="no">
+    <title></title>
+    <link rel="stylesheet" href="css/css.css">
+</head>
+<body v-need-login class="bgff5243">
+<!-- main section -->
+  <section class="ui-container" v-cloak>
+      <div class="rotaryTable-header">
+          <img src="img/lucky-table.png" class="" width="100%"/>
+          <p class="cf f14 text-center">活动时间：2016.06.01-2016.07.01</p>
+          <p class="mgT10 text-center cff4a39"><span class="bgf dec">今天还有3次抽奖机会</span></p>
+      </div>
+      <div class="rotaryTable-content">
+          <div class="table">
+              <div class="layer layer_1">
+                  <p class="ui-nowrap">1积分</p>
+                  <p><img src="img/good.png" class="award-img"></p>
+              </div>
+              <div class="layer layer_2">
+                  <p class="ui-nowrap">2积分</p>
+                  <p><img src="img/good.png" class="award-img"></p>
+              </div>
+              <div class="layer layer_3">
+                  <p class="ui-nowrap">3积分</p>
+                  <p><img src="img/good.png" class="award-img"></p>
+              </div>
+              <div class="layer layer_4 ">
+                  <p class="ui-nowrap">4积分</p>
+                  <p><img src="img/good.png" class="award-img"></p>
+              </div>
+              <div class="layer layer_5">
+                  <p class="ui-nowrap">5积分</p>
+                  <p><img src="img/good.png" class="award-img"></p>
+              </div>
+              <div class="layer layer_6">
+                  <p class="ui-nowrap">6积分</p>
+                  <p><img src="img/good.png" class="award-img"></p>
+              </div>
+          </div>
+
+
+          <img src="img/go.png" class="go" id="startBtn"/>
+
+      </div>
+      <div class="rotaryTable-bottom text-center">
+          <p class="f14 cf ">5积分/每次   我的积分:100</p>
+          <span class="winning-list">中奖榜单</span>
+      </div>
+      <div class="rotaryTable-List">
+          <ul>
+              <li class="ui-nowrap">137****4258 <span class="pdL25">恭喜抽中88元红包 </span></li>
+              <li class="ui-nowrap">137****4258 <span class="pdL25">恭喜抽中88元红包</span></li>
+              <li class="ui-nowrap">137****4258 <span class="pdL25"> 恭喜抽中88元红包</span></li>
+              <li class="ui-nowrap">137****4258 <span class="pdL25"> 恭喜抽中88元红包</span></li>
+              <li class="ui-nowrap">137****4258 <span class="pdL25"> 恭喜抽中88元红包</span></li>
+          </ul>
+      </div>
+      <p class="text-center cf mgT5">活动规则>></p>
+    </section>
+<!--pop以中奖-->
+  <div class="pop hide">
+      <div class="pop-cnt">
+            <img src="img/winning.png" class="winning"/>
+              <div class=" text-center mgB15">
+                  <img src="img/good.png" class="w63h63 border-ddd"/>
+                  <p class="c6 mgT5">恭喜您获得 iphone6一台，</p>
+                  <p class="c3 mgT5">已存入您的购物车内，快去查看吧！</p>
+              </div>
+              <div class="btn-lg cf text-center">查看购物车</div>
+          <div class="pop-close">
+            <i></i>
+          </div>
+      </div>
+  </div>
+  <script src="js/jquery-2.2.2.min.js"></script>
+  <script src="js/jQueryRotate.2.2.js"></script>
+  <script>
+      $(".pop-close").click(function(){
+          $(".pop").hide();
+      })
+      var ready = true;//就绪
+      var group = [
+          {key: 5, s:36, e: 108},
+          {key: 6, s:0, e: 36},
+          {key: 7, s:252, e: 324},
+          {key: 8, s:180, e: 252},
+          {key: 9, s:108, e: 180}
+      ];
+      $('#startBtn').click(function () {
+          if(ready) {
+              ready = false;
+              //调接口 回调下面方法
+              var result = Math.round(Math.random()*4+5);//模拟接口返回值
+              var deg = 0;//转动的角度
+              localStorage.prize = result;//存储
+              for(var i=0; i<group.length; i++) {
+                  if(group[i].key == result) {
+                      deg = parseInt(Math.random()*(group[i].e - group[i].s) + group[i].s);
+                  }
+              }
+              $('.table').rotate({
+                  angle: -36, //初始角度
+                  duration: 5000, //转圈时间
+                  animateTo: 1080 + deg, //3圈加上最后的结果
+                  callback: function() {
+                      $(".pop").show();
+                  }
+              })
+              //回调方法到此结束
+          }
+      });
+      $('.model .close').click(function () {
+          var par = $(this).parent();
+          var parPar = par.parent();
+
+          par.addClass('hide');
+          setTimeout(function () {
+              parPar.addClass('hide');
+              $('#robot').addClass('down');
+          }, 200);
+      });
+      //禁止下拉显示网址信息
+  //    document.querySelector('body').addEventListener('touchmove', function (e) {
+  //        e.preventDefault();
+  //    });
+     $(document).ready(function(){
+        var rollTimer = null;
+           if (this.rollTimer) {
+                  clearInterval(this.rollTimer);
+              }
+              
+              this.rollTimer = setInterval(function() {
+                  $(".rotaryTable-List").find("ul").animate({
+                      marginTop: "-23px"
+                  }, 1000, function() {
+                      $(this).css({ marginTop: "0px" }).find("li:first-child").appendTo(this);
+                  })
+              }, 2000);
+         
+      });
+  </script>
+</body>
+</html>
